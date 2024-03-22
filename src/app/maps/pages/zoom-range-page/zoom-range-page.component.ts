@@ -9,18 +9,29 @@ export class ZoomRangePageComponent  implements AfterViewInit, OnDestroy{
 
   @ViewChild('map') divMap?: ElementRef;
 
-  public zoom: number = 10;
+  public zoom: number = 15;
   public map?: Map;
   public curremtLngLat: LngLat = new LngLat(-99.1332, 19.4326);
   ngAfterViewInit(): void {
+    const MAPTILER_KEY = 'get_your_own_OpIi9ZULNHzrESv6T2vL';
+
     if (!this.divMap) throw 'el elemento html no fue encontrado';
     this.map  = new Map({
       container: this.divMap.nativeElement,
-      style: 'https://demotiles.maplibre.org/style.json', // ubicación de la hoja de estilo
+      //style: 'https://demotiles.maplibre.org/style.json',  ubicación de la hoja de estilo
+      style: `https://api.maptiler.com/maps/basic-v2/style.json?key=${MAPTILER_KEY}`,
       center: this.curremtLngLat, // posición inicial [lng, lat]
-      zoom:  this.zoom// zoom inicial
+      zoom:  this.zoom,// zoom inicial
+      pitch: 45,
+      bearing: -17.6,
+
+      antialias: true,
+
+
     });
+
     this.mapListeners();
+
   }
   ngOnDestroy(): void {
     this.map?.remove();
@@ -35,8 +46,8 @@ export class ZoomRangePageComponent  implements AfterViewInit, OnDestroy{
     if(!this.map) throw 'map no inicializado';
 
     this.map.on('zoomend', (ev)=> {
-      if( this.map!.getZoom() < 18) return;
-      this.map!.zoomTo(18);
+       if( this.map!.getZoom() < 18) return;
+       this.map!.zoomTo(18);
     });
 
     this.map.on('move', ()=>{
@@ -57,4 +68,7 @@ export class ZoomRangePageComponent  implements AfterViewInit, OnDestroy{
     this.zoom = Number(value);
     this.map?.zoomTo(this.zoom);
   }
+
+
+
 }
