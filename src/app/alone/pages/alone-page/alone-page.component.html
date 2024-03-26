@@ -1,5 +1,7 @@
 <div class="row mt-2">
-  <div class="col-2"></div>
+  <div class="col-2">
+    <side-menu/>
+  </div>
   <div class="col-10">
     <h1>standalone component -page</h1>
     <hr>
@@ -7,6 +9,8 @@
       <div class="col">
         <p>este componente n o necesita ser importado en modulos</p>
         <p *ngIf="true">porqu es su propio modulo {{1+1}}</p>
+        <!-- contador -->
+        <counter-alone [counter]="25"></counter-alone>
       </div>
     </div>
   </div>
